@@ -9,6 +9,7 @@ import {getCars,createCar} from './db/models/carController'
 
 //Importerar mongoose och connect funktionen och använder den med min MongoDB
 import {connect} from 'mongoose'
+import { create } from 'ts-node'
 //Skapar en anslutning till MongoDB och jag upprättar en databas
 connect('mongodb://localhost:27017/richardc')
 
@@ -37,11 +38,15 @@ app.get('/car', async (req:Request, res:Response) => {
     res.json(cars)
 })
 
-
 /* Den här rutten kommer att lyssna efter POST förfrågningar på port 8000 vid /car endpoint och
 använda createCar funktionen för att skapa en ny bil med hjälp av data som skickas i förfrågnings bodyn, dvs
 req.body
 Se till att definiera funktionen createCar och importera den till din serverfil */
+app.post('/car', async (req:Request, res:Response) => {
+    const newCar = req.body
+    const createdCar = await createCar(newCar)
+    res.json(createdCar)
+})
 
 //Steg 4
 //Måste lyssna på porten för att servern ska fungera och hantera nätverksförfrågningar
