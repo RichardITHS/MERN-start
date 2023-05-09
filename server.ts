@@ -4,6 +4,8 @@
 import express, {Request, Response, json} from 'express'
 //Importerar routes "mina rutter"
 import carRouter from './routes/carRoutes'
+//Importera alla metoder från vår carController
+import {getCars,createCar} from './db/models/carController'
 
 //Importerar mongoose och connect funktionen och använder den med min MongoDB
 import {connect} from 'mongoose'
@@ -20,6 +22,8 @@ const port = 8000
 //Använda json, detta middleware är till för att tolka inkommande förfrågningar
 //i json formatet
 app.use(json())
+//Använda router i vår server
+app.use('/car', carRouter)
 
 
 //Steg 3
@@ -27,7 +31,17 @@ app.use(json())
 app.get('/', (req:Request, res:Response)=> {
     res.send('Ja detta fungerar')
 })
+//Get cars från '/car' rutten
+app.get('/car', async (req:Request, res:Response) => {
+    const cars = await getCars()
+    res.json(cars)
+})
 
+
+/* Den här rutten kommer att lyssna efter POST förfrågningar på port 8000 vid /car endpoint och
+använda createCar funktionen för att skapa en ny bil med hjälp av data som skickas i förfrågnings bodyn, dvs
+req.body
+Se till att definiera funktionen createCar och importera den till din serverfil */
 
 //Steg 4
 //Måste lyssna på porten för att servern ska fungera och hantera nätverksförfrågningar
