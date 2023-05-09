@@ -2,6 +2,14 @@
 //Importerar paket och skapar variabler för användning lite längre ned
 //Importerar express
 import express, {Request, Response, json} from 'express'
+//Importerar routes "mina rutter"
+import carRouter from './routes/carRoutes'
+
+//Importerar mongoose och connect funktionen och använder den med min MongoDB
+import {connect} from 'mongoose'
+//Skapar en anslutning till MongoDB och jag upprättar en databas
+connect('mongodb://localhost:27017/richardc')
+
 //Använder variabeln app för att arbeta med express
 const app = express()
 //Bestämmer Port
