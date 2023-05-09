@@ -21,3 +21,7 @@ export const getCars = async () => {
     const Cars = await CarModel.find()
     return Cars;
 }
+
+//Delete
+
+//Find på en annan adress tex /cars/1
